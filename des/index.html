@@ -1,0 +1,1166 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Advanced Plagiarism Checker | Multiple Algorithms</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <style>
+        :root {
+            --primary: #2563eb;
+            --primary-dark: #1d4ed8;
+            --secondary: #64748b;
+            --success: #10b981;
+            --warning: #f59e0b;
+            --danger: #ef4444;
+            --info: #3b82f6;
+            --light: #f8fafc;
+            --dark: #1e293b;
+            --border: #e2e8f0;
+            --card-bg: #ffffff;
+            --shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+            --gradient: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background: var(--gradient);
+            color: var(--dark);
+            line-height: 1.6;
+            min-height: 100vh;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+
+        .header {
+            text-align: center;
+            margin-bottom: 30px;
+            color: white;
+        }
+
+        .header h1 {
+            font-size: 2.5rem;
+            margin-bottom: 10px;
+            font-weight: 700;
+        }
+
+        .header p {
+            font-size: 1.1rem;
+            opacity: 0.9;
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        .card {
+            background: var(--card-bg);
+            border-radius: 12px;
+            box-shadow: var(--shadow);
+            padding: 24px;
+            margin-bottom: 24px;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .card:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+        }
+
+        .card-title {
+            font-size: 1.25rem;
+            font-weight: 600;
+            margin-bottom: 16px;
+            color: var(--dark);
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .card-title i {
+            color: var(--primary);
+        }
+
+        .grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 24px;
+        }
+
+        @media (max-width: 768px) {
+            .grid {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        .form-group {
+            margin-bottom: 16px;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 6px;
+            font-weight: 500;
+            color: var(--secondary);
+        }
+
+        input, textarea, select {
+            width: 100%;
+            padding: 12px;
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            font-size: 14px;
+            transition: border-color 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        input:focus, textarea:focus, select:focus {
+            outline: none;
+            border-color: var(--primary);
+            box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.1);
+        }
+
+        textarea {
+            min-height: 150px;
+            resize: vertical;
+            font-family: 'Courier New', monospace;
+        }
+
+        .btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            background: var(--primary);
+            color: white;
+            border: none;
+            padding: 12px 20px;
+            border-radius: 8px;
+            font-size: 14px;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .btn:hover {
+            background: var(--primary-dark);
+            transform: translateY(-1px);
+        }
+
+        .btn-success {
+            background: var(--success);
+        }
+
+        .btn-success:hover {
+            background: #0da271;
+        }
+
+        .btn-warning {
+            background: var(--warning);
+        }
+
+        .btn-warning:hover {
+            background: #d97706;
+        }
+
+        .btn-danger {
+            background: var(--danger);
+        }
+
+        .btn-danger:hover {
+            background: #dc2626;
+        }
+
+        .btn:disabled {
+            background: #94a3b8;
+            cursor: not-allowed;
+            transform: none;
+        }
+
+        .btn-group {
+            display: flex;
+            gap: 12px;
+            flex-wrap: wrap;
+        }
+
+        .stats {
+            display: flex;
+            gap: 16px;
+            flex-wrap: wrap;
+            margin-top: 16px;
+        }
+
+        .stat {
+            background: var(--light);
+            padding: 12px;
+            border-radius: 8px;
+            flex: 1;
+            min-width: 120px;
+            text-align: center;
+        }
+
+        .stat-value {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: var(--primary);
+        }
+
+        .stat-label {
+            font-size: 0.875rem;
+            color: var(--secondary);
+        }
+
+        .results-panel {
+            grid-column: 1 / -1;
+        }
+
+        .similarity-score {
+            font-size: 2rem;
+            font-weight: 700;
+            margin: 16px 0;
+            text-align: center;
+        }
+
+        .risk-low { color: var(--success); }
+        .risk-medium { color: var(--warning); }
+        .risk-high { color: var(--danger); }
+
+        .progress-bar {
+            height: 10px;
+            background: var(--border);
+            border-radius: 5px;
+            margin: 16px 0;
+            overflow: hidden;
+        }
+
+        .progress-fill {
+            height: 100%;
+            background: var(--primary);
+            border-radius: 5px;
+            transition: width 0.5s ease;
+        }
+
+        .comparison-item {
+            border-left: 4px solid var(--primary);
+            padding: 16px;
+            background: var(--light);
+            border-radius: 0 8px 8px 0;
+            margin-bottom: 16px;
+        }
+
+        .comparison-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 12px;
+        }
+
+        .filename {
+            font-weight: 600;
+            font-size: 1.1rem;
+        }
+
+        .kgram-preview {
+            background: #1e293b;
+            color: #e2e8f0;
+            padding: 16px;
+            border-radius: 8px;
+            font-family: 'Courier New', monospace;
+            font-size: 13px;
+            max-height: 200px;
+            overflow: auto;
+            white-space: pre-wrap;
+        }
+
+        .common-phrase {
+            background: rgba(37, 99, 235, 0.1);
+            padding: 8px 12px;
+            border-radius: 6px;
+            margin: 8px 0;
+            border-left: 3px solid var(--primary);
+        }
+
+        .alert {
+            padding: 12px 16px;
+            border-radius: 8px;
+            margin: 16px 0;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .alert-info {
+            background: rgba(37, 99, 235, 0.1);
+            color: var(--primary);
+            border-left: 4px solid var(--primary);
+        }
+
+        .alert-success {
+            background: rgba(16, 185, 129, 0.1);
+            color: var(--success);
+            border-left: 4px solid var(--success);
+        }
+
+        .alert-warning {
+            background: rgba(245, 158, 11, 0.1);
+            color: var(--warning);
+            border-left: 4px solid var(--warning);
+        }
+
+        .alert-danger {
+            background: rgba(239, 68, 68, 0.1);
+            color: var(--danger);
+            border-left: 4px solid var(--danger);
+        }
+
+        .loading {
+            display: inline-block;
+            width: 20px;
+            height: 20px;
+            border: 3px solid rgba(255,255,255,.3);
+            border-radius: 50%;
+            border-top-color: #fff;
+            animation: spin 1s ease-in-out infinite;
+        }
+
+        @keyframes spin {
+            to { transform: rotate(360deg); }
+        }
+
+        .tabs {
+            display: flex;
+            border-bottom: 1px solid var(--border);
+            margin-bottom: 16px;
+        }
+
+        .tab {
+            padding: 12px 20px;
+            cursor: pointer;
+            font-weight: 500;
+            border-bottom: 3px solid transparent;
+            transition: all 0.3s ease;
+        }
+
+        .tab.active {
+            color: var(--primary);
+            border-bottom-color: var(--primary);
+        }
+
+        .tab-content {
+            display: none;
+        }
+
+        .tab-content.active {
+            display: block;
+        }
+
+        .file-upload {
+            border: 2px dashed var(--border);
+            border-radius: 8px;
+            padding: 24px;
+            text-align: center;
+            transition: all 0.3s ease;
+            cursor: pointer;
+        }
+
+        .file-upload:hover {
+            border-color: var(--primary);
+            background: rgba(37, 99, 235, 0.05);
+        }
+
+        .file-upload i {
+            font-size: 2rem;
+            color: var(--secondary);
+            margin-bottom: 12px;
+        }
+
+        .file-list {
+            margin-top: 16px;
+        }
+
+        .file-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 8px 12px;
+            background: var(--light);
+            border-radius: 6px;
+            margin-bottom: 8px;
+        }
+
+        .file-name {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .file-actions {
+            display: flex;
+            gap: 8px;
+        }
+
+        .icon-btn {
+            background: none;
+            border: none;
+            color: var(--secondary);
+            cursor: pointer;
+            padding: 4px;
+            border-radius: 4px;
+            transition: all 0.3s ease;
+        }
+
+        .icon-btn:hover {
+            background: rgba(0,0,0,0.1);
+            color: var(--dark);
+        }
+
+        .algorithm-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 12px;
+            margin: 16px 0;
+        }
+
+        .algorithm-card {
+            background: var(--light);
+            padding: 12px;
+            border-radius: 8px;
+            border-left: 4px solid var(--primary);
+        }
+
+        .algorithm-name {
+            font-weight: 600;
+            color: var(--primary);
+            margin-bottom: 4px;
+        }
+
+        .algorithm-desc {
+            font-size: 0.875rem;
+            color: var(--secondary);
+        }
+
+        .chart-container {
+            height: 300px;
+            margin: 20px 0;
+        }
+
+        .similarity-details {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 12px;
+            margin: 16px 0;
+        }
+
+        .similarity-metric {
+            background: var(--light);
+            padding: 12px;
+            border-radius: 8px;
+            text-align: center;
+        }
+
+        .metric-value {
+            font-size: 1.25rem;
+            font-weight: 700;
+            color: var(--primary);
+        }
+
+        .metric-label {
+            font-size: 0.875rem;
+            color: var(--secondary);
+        }
+
+        .data-structure-info {
+            background: var(--light);
+            padding: 16px;
+            border-radius: 8px;
+            margin: 16px 0;
+        }
+
+        .ds-title {
+            font-weight: 600;
+            color: var(--primary);
+            margin-bottom: 8px;
+        }
+
+        .ds-list {
+            list-style: none;
+            padding-left: 0;
+        }
+
+        .ds-list li {
+            padding: 4px 0;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .ds-list li:before {
+            content: "▸";
+            color: var(--primary);
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1><i class="fas fa-search"></i> Advanced Plagiarism Checker</h1>
+            <p>Multiple algorithms with advanced data structures - Jaccard, Cosine, Containment, and Dice Similarity</p>
+        </div>
+
+        <div class="grid">
+            <div>
+                <div class="card">
+                    <div class="card-title">
+                        <i class="fas fa-file-alt"></i>
+                        <span>Document Input</span>
+                    </div>
+                    
+                    <div class="tabs">
+                        <div class="tab active" data-tab="text">Text Input</div>
+                        <div class="tab" data-tab="file">File Upload</div>
+                    </div>
+                    
+                    <div class="tab-content active" id="text-tab">
+                        <div class="form-group">
+                            <label for="targetText">Target Document</label>
+                            <textarea id="targetText" placeholder="Paste the document you want to check for plagiarism here..."></textarea>
+                        </div>
+                    </div>
+                    
+                    <div class="tab-content" id="file-tab">
+                        <div class="file-upload" id="targetFileUpload">
+                            <i class="fas fa-cloud-upload-alt"></i>
+                            <p>Click to upload target document</p>
+                            <input type="file" id="targetFile" accept=".txt,.doc,.docx,.pdf" style="display: none;">
+                        </div>
+                        <div id="targetFileInfo" class="file-list"></div>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="kValue">K-gram Size (3-7 recommended)</label>
+                        <input type="number" id="kValue" min="2" max="10" value="3">
+                    </div>
+
+                    <div class="data-structure-info">
+                        <div class="ds-title">Data Structures Used:</div>
+                        <ul class="ds-list">
+                            <li>Linked Lists for token storage</li>
+                            <li>Hash Sets for k-gram storage and efficient lookups</li>
+                            <li>Arrays for document management</li>
+                        </ul>
+                    </div>
+                    
+                    <div class="btn-group">
+                        <button class="btn btn-success" id="preprocessBtn">
+                            <i class="fas fa-cog"></i> Preprocess Text
+                        </button>
+                        <button class="btn" id="checkBtn">
+                            <i class="fas fa-search"></i> Check Plagiarism
+                        </button>
+                        <button class="btn btn-warning" id="clearBtn">
+                            <i class="fas fa-broom"></i> Clear All
+                        </button>
+                    </div>
+                </div>
+                
+                <div class="card">
+                    <div class="card-title">
+                        <i class="fas fa-chart-bar"></i>
+                        <span>Document Statistics</span>
+                    </div>
+                    
+                    <div class="stats" id="statsContainer">
+                        <div class="stat">
+                            <div class="stat-value" id="tokenCount">0</div>
+                            <div class="stat-label">Tokens</div>
+                        </div>
+                        <div class="stat">
+                            <div class="stat-value" id="kgramCount">0</div>
+                            <div class="stat-label">K-grams</div>
+                        </div>
+                        <div class="stat">
+                            <div class="stat-value" id="refCount">0</div>
+                            <div class="stat-label">References</div>
+                        </div>
+                        <div class="stat">
+                            <div class="stat-value" id="uniqueKgrams">0</div>
+                            <div class="stat-label">Unique K-grams</div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="card">
+                    <div class="card-title">
+                        <i class="fas fa-file-import"></i>
+                        <span>Reference Documents</span>
+                    </div>
+                    
+                    <div class="file-upload" id="refFileUpload">
+                        <i class="fas fa-plus-circle"></i>
+                        <p>Click to add reference documents</p>
+                        <input type="file" id="refFiles" multiple accept=".txt,.doc,.docx,.pdf" style="display: none;">
+                    </div>
+                    
+                    <div id="refFileList" class="file-list"></div>
+                </div>
+            </div>
+            
+            <div>
+                <div class="card">
+                    <div class="card-title">
+                        <i class="fas fa-code"></i>
+                        <span>Processed Text & K-grams</span>
+                    </div>
+                    
+                    <div class="tabs">
+                        <div class="tab active" data-tab="processed">Processed Text</div>
+                        <div class="tab" data-tab="kgrams">K-gram Preview</div>
+                    </div>
+                    
+                    <div class="tab-content active" id="processed-tab">
+                        <div class="kgram-preview" id="processedText">
+                            No text processed yet. Click "Preprocess Text" to begin.
+                        </div>
+                    </div>
+                    
+                    <div class="tab-content" id="kgrams-tab">
+                        <div class="kgram-preview" id="kgramPreview">
+                            No k-grams generated yet.
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="card">
+                    <div class="card-title">
+                        <i class="fas fa-project-diagram"></i>
+                        <span>Similarity Algorithms</span>
+                    </div>
+                    
+                    <div class="algorithm-grid">
+                        <div class="algorithm-card">
+                            <div class="algorithm-name">Jaccard Similarity</div>
+                            <div class="algorithm-desc">Measures overlap between sets: |A∩B| / |A∪B|</div>
+                        </div>
+                        <div class="algorithm-card">
+                            <div class="algorithm-name">Cosine Similarity</div>
+                            <div class="algorithm-desc">Cosine of angle between vectors in multi-dimensional space</div>
+                        </div>
+                        <div class="algorithm-card">
+                            <div class="algorithm-name">Containment Similarity</div>
+                            <div class="algorithm-desc">Measures how much of target is contained in reference: |A∩B| / |A|</div>
+                        </div>
+                        <div class="algorithm-card">
+                            <div class="algorithm-name">Dice Coefficient</div>
+                            <div class="algorithm-desc">Measures similarity: 2|A∩B| / (|A| + |B|)</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="card results-panel">
+                <div class="card-title">
+                    <i class="fas fa-chart-pie"></i>
+                    <span>Plagiarism Analysis Results</span>
+                </div>
+                
+                <div id="resultsContainer">
+                    <div class="alert alert-info">
+                        <i class="fas fa-info-circle"></i>
+                        <div>
+                            <strong>Ready to analyze</strong>
+                            <p>Preprocess your text and add reference documents, then click "Check Plagiarism" to see results from all four algorithms.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Application state
+        const state = {
+            targetText: '',
+            processedText: '',
+            tokens: [],
+            kgrams: [],
+            references: [],
+            kValue: 3,
+            results: null,
+            algorithms: [
+                { name: 'Jaccard', formula: '|A∩B| / |A∪B|' },
+                { name: 'Cosine', formula: 'A·B / (||A|| * ||B||)' },
+                { name: 'Containment', formula: '|A∩B| / |A|' },
+                { name: 'Dice', formula: '2|A∩B| / (|A| + |B|)' }
+            ]
+        };
+
+        // DOM elements
+        const targetText = document.getElementById('targetText');
+        const targetFile = document.getElementById('targetFile');
+        const targetFileUpload = document.getElementById('targetFileUpload');
+        const targetFileInfo = document.getElementById('targetFileInfo');
+        const kValue = document.getElementById('kValue');
+        const preprocessBtn = document.getElementById('preprocessBtn');
+        const checkBtn = document.getElementById('checkBtn');
+        const clearBtn = document.getElementById('clearBtn');
+        const tokenCount = document.getElementById('tokenCount');
+        const kgramCount = document.getElementById('kgramCount');
+        const refCount = document.getElementById('refCount');
+        const uniqueKgrams = document.getElementById('uniqueKgrams');
+        const processedText = document.getElementById('processedText');
+        const kgramPreview = document.getElementById('kgramPreview');
+        const resultsContainer = document.getElementById('resultsContainer');
+        const refFiles = document.getElementById('refFiles');
+        const refFileUpload = document.getElementById('refFileUpload');
+        const refFileList = document.getElementById('refFileList');
+
+        // Event listeners
+        targetFileUpload.addEventListener('click', () => targetFile.click());
+        targetFile.addEventListener('change', handleTargetFileUpload);
+        
+        refFileUpload.addEventListener('click', () => refFiles.click());
+        refFiles.addEventListener('change', handleRefFilesUpload);
+        
+        preprocessBtn.addEventListener('click', preprocessText);
+        checkBtn.addEventListener('click', checkPlagiarism);
+        clearBtn.addEventListener('click', clearAll);
+        
+        kValue.addEventListener('change', () => {
+            state.kValue = parseInt(kValue.value) || 3;
+        });
+        
+        // Tab switching
+        document.querySelectorAll('.tab').forEach(tab => {
+            tab.addEventListener('click', () => {
+                const tabType = tab.getAttribute('data-tab');
+                const container = tab.closest('.card');
+                
+                // Deactivate all tabs in this container
+                container.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
+                container.querySelectorAll('.tab-content').forEach(tc => tc.classList.remove('active'));
+                
+                // Activate clicked tab
+                tab.classList.add('active');
+                container.querySelector(`#${tabType}-tab`).classList.add('active');
+            });
+        });
+
+        // File handling
+        function handleTargetFileUpload(e) {
+            const file = e.target.files[0];
+            if (!file) return;
+            
+            const reader = new FileReader();
+            reader.onload = function(e) {
+                state.targetText = e.target.result;
+                targetText.value = state.targetText;
+                
+                targetFileInfo.innerHTML = `
+                    <div class="file-item">
+                        <div class="file-name">
+                            <i class="fas fa-file"></i>
+                            <span>${file.name}</span>
+                        </div>
+                        <div class="file-actions">
+                            <button class="icon-btn" onclick="removeTargetFile()">
+                                <i class="fas fa-times"></i>
+                            </button>
+                        </div>
+                    </div>
+                `;
+            };
+            reader.readAsText(file);
+        }
+        
+        function removeTargetFile() {
+            targetFile.value = '';
+            targetFileInfo.innerHTML = '';
+            state.targetText = '';
+            targetText.value = '';
+        }
+
+        function handleRefFilesUpload(e) {
+            const files = Array.from(e.target.files);
+            if (files.length === 0) return;
+            
+            files.forEach(file => {
+                const reader = new FileReader();
+                reader.onload = function(e) {
+                    state.references.push({
+                        name: file.name,
+                        content: e.target.result,
+                        tokens: [],
+                        kgrams: []
+                    });
+                    
+                    updateRefFileList();
+                };
+                reader.readAsText(file);
+            });
+            
+            refFiles.value = '';
+        }
+        
+        function updateRefFileList() {
+            refFileList.innerHTML = '';
+            state.references.forEach((ref, index) => {
+                const fileItem = document.createElement('div');
+                fileItem.className = 'file-item';
+                fileItem.innerHTML = `
+                    <div class="file-name">
+                        <i class="fas fa-file"></i>
+                        <span>${ref.name}</span>
+                    </div>
+                    <div class="file-actions">
+                        <button class="icon-btn" onclick="removeRefFile(${index})">
+                            <i class="fas fa-times"></i>
+                        </button>
+                    </div>
+                `;
+                refFileList.appendChild(fileItem);
+            });
+            
+            refCount.textContent = state.references.length;
+        }
+        
+        function removeRefFile(index) {
+            state.references.splice(index, 1);
+            updateRefFileList();
+        }
+
+        // Text preprocessing
+        function preprocessText() {
+            if (!targetText.value.trim()) {
+                showAlert('Please enter some text to process', 'warning');
+                return;
+            }
+            
+            state.targetText = targetText.value;
+            
+            // Simple preprocessing
+            const text = state.targetText.toLowerCase()
+                .replace(/[^\w\s']/g, ' ')
+                .replace(/\s+/g, ' ')
+                .trim();
+                
+            state.processedText = text;
+            state.tokens = text.split(/\s+/).filter(token => token.length > 0);
+            
+            // Generate k-grams
+            generateKgrams();
+            
+            // Update UI
+            processedText.textContent = state.processedText || 'No text processed';
+            tokenCount.textContent = state.tokens.length;
+            kgramCount.textContent = state.kgrams.length;
+            uniqueKgrams.textContent = new Set(state.kgrams).size;
+            
+            showAlert('Text preprocessing completed successfully', 'success');
+        }
+        
+        function generateKgrams() {
+            state.kgrams = [];
+            const k = state.kValue;
+            
+            if (state.tokens.length < k) {
+                showAlert(`Text is too short for k=${k}. Need at least ${k} tokens.`, 'warning');
+                return;
+            }
+            
+            for (let i = 0; i <= state.tokens.length - k; i++) {
+                state.kgrams.push(state.tokens.slice(i, i + k).join(' '));
+            }
+            
+            // Update k-gram preview
+            kgramPreview.textContent = state.kgrams.slice(0, 50).join('\n') + 
+                (state.kgrams.length > 50 ? `\n\n... and ${state.kgrams.length - 50} more` : '');
+        }
+
+        // Plagiarism checking
+        function checkPlagiarism() {
+            if (state.tokens.length === 0) {
+                showAlert('Please preprocess the text first', 'warning');
+                return;
+            }
+            
+            if (state.references.length === 0) {
+                showAlert('Please add at least one reference document', 'warning');
+                return;
+            }
+            
+            // Show loading state
+            checkBtn.innerHTML = '<div class="loading"></div> Analyzing...';
+            checkBtn.disabled = true;
+            
+            // Simulate backend processing
+            setTimeout(() => {
+                simulateBackendAnalysis();
+                
+                checkBtn.innerHTML = '<i class="fas fa-search"></i> Check Plagiarism';
+                checkBtn.disabled = false;
+            }, 2000);
+        }
+        
+        function simulateBackendAnalysis() {
+            // Simulate backend response with all four algorithms
+            const results = {
+                target_stats: {
+                    tokens: state.tokens.length,
+                    kgrams: state.kgrams.length,
+                    k_value: state.kValue,
+                    unique_kgrams: new Set(state.kgrams).size
+                },
+                comparisons: state.references.map(ref => {
+                    // Simulate different similarity scores for each algorithm
+                    const baseSimilarity = Math.random() * 0.6;
+                    
+                    return {
+                        filename: ref.name,
+                        jaccard: Math.min(baseSimilarity + (Math.random() * 0.2 - 0.1), 1.0),
+                        cosine: Math.min(baseSimilarity + (Math.random() * 0.2 - 0.1), 1.0),
+                        containment: Math.min(baseSimilarity + (Math.random() * 0.2 - 0.1), 1.0),
+                        dice: Math.min(baseSimilarity + (Math.random() * 0.2 - 0.1), 1.0),
+                        matching_kgrams: Math.floor(baseSimilarity * state.kgrams.length),
+                        common_phrases: generateSamplePhrases()
+                    };
+                })
+            };
+            
+            // Calculate overall scores
+            results.comparisons.forEach(comp => {
+                comp.overall = (comp.jaccard + comp.cosine + comp.containment + comp.dice) / 4;
+            });
+            
+            displayResults(results);
+        }
+        
+        function generateSamplePhrases() {
+            const phrases = [];
+            if (state.tokens.length >= 5) {
+                for (let i = 0; i < 3; i++) {
+                    const start = Math.floor(Math.random() * (state.tokens.length - 4));
+                    phrases.push(state.tokens.slice(start, start + 5).join(' '));
+                }
+            }
+            return phrases;
+        }
+
+        // Results display
+        function displayResults(results) {
+            let html = '';
+            
+            // Overall risk assessment
+            const maxSimilarity = Math.max(...results.comparisons.map(c => c.overall));
+            const riskLevel = maxSimilarity < 0.1 ? 'Low' : maxSimilarity < 0.3 ? 'Medium' : 'High';
+            const riskClass = `risk-${riskLevel.toLowerCase()}`;
+            
+            html += `
+                <div class="alert ${riskLevel === 'Low' ? 'alert-success' : riskLevel === 'Medium' ? 'alert-warning' : 'alert-danger'}">
+                    <i class="fas ${riskLevel === 'Low' ? 'fa-check-circle' : riskLevel === 'Medium' ? 'fa-exclamation-triangle' : 'fa-exclamation-circle'}"></i>
+                    <div>
+                        <strong>Overall Plagiarism Risk: ${riskLevel}</strong>
+                        <p>Highest similarity detected: ${(maxSimilarity * 100).toFixed(1)}% across ${results.comparisons.length} reference(s)</p>
+                    </div>
+                </div>
+                
+                <div class="chart-container">
+                    <canvas id="similarityChart"></canvas>
+                </div>
+            `;
+            
+            // Individual comparisons
+            results.comparisons.forEach(comparison => {
+                const overallPercent = (comparison.overall * 100).toFixed(1);
+                const riskClass = comparison.overall < 0.1 ? 'risk-low' : 
+                                comparison.overall < 0.3 ? 'risk-medium' : 'risk-high';
+                
+                html += `
+                    <div class="comparison-item">
+                        <div class="comparison-header">
+                            <div class="filename">${comparison.filename}</div>
+                            <div class="similarity-score ${riskClass}">${overallPercent}%</div>
+                        </div>
+                        
+                        <div class="progress-bar">
+                            <div class="progress-fill" style="width: ${Math.min(overallPercent, 100)}%"></div>
+                        </div>
+                        
+                        <div class="similarity-details">
+                            <div class="similarity-metric">
+                                <div class="metric-value">${(comparison.jaccard * 100).toFixed(1)}%</div>
+                                <div class="metric-label">Jaccard</div>
+                            </div>
+                            <div class="similarity-metric">
+                                <div class="metric-value">${(comparison.cosine * 100).toFixed(1)}%</div>
+                                <div class="metric-label">Cosine</div>
+                            </div>
+                            <div class="similarity-metric">
+                                <div class="metric-value">${(comparison.containment * 100).toFixed(1)}%</div>
+                                <div class="metric-label">Containment</div>
+                            </div>
+                            <div class="similarity-metric">
+                                <div class="metric-value">${(comparison.dice * 100).toFixed(1)}%</div>
+                                <div class="metric-label">Dice</div>
+                            </div>
+                        </div>
+                        
+                        <div class="muted">Matching k-grams: ${comparison.matching_kgrams}</div>
+                        
+                        ${comparison.common_phrases.length > 0 ? `
+                            <div style="margin-top: 12px;">
+                                <strong>Common Phrases:</strong>
+                                ${comparison.common_phrases.map(phrase => `
+                                    <div class="common-phrase">"${phrase}"</div>
+                                `).join('')}
+                            </div>
+                        ` : ''}
+                    </div>
+                `;
+            });
+            
+            resultsContainer.innerHTML = html;
+            
+            // Create chart
+            createSimilarityChart(results.comparisons);
+        }
+        
+        function createSimilarityChart(comparisons) {
+            const ctx = document.getElementById('similarityChart').getContext('2d');
+            const filenames = comparisons.map(c => c.filename);
+            
+            new Chart(ctx, {
+                type: 'bar',
+                data: {
+                    labels: filenames,
+                    datasets: [
+                        {
+                            label: 'Jaccard',
+                            data: comparisons.map(c => c.jaccard * 100),
+                            backgroundColor: 'rgba(59, 130, 246, 0.7)'
+                        },
+                        {
+                            label: 'Cosine',
+                            data: comparisons.map(c => c.cosine * 100),
+                            backgroundColor: 'rgba(16, 185, 129, 0.7)'
+                        },
+                        {
+                            label: 'Containment',
+                            data: comparisons.map(c => c.containment * 100),
+                            backgroundColor: 'rgba(245, 158, 11, 0.7)'
+                        },
+                        {
+                            label: 'Dice',
+                            data: comparisons.map(c => c.dice * 100),
+                            backgroundColor: 'rgba(239, 68, 68, 0.7)'
+                        }
+                    ]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    scales: {
+                        y: {
+                            beginAtZero: true,
+                            max: 100,
+                            title: {
+                                display: true,
+                                text: 'Similarity (%)'
+                            }
+                        },
+                        x: {
+                            title: {
+                                display: true,
+                                text: 'Reference Documents'
+                            }
+                        }
+                    },
+                    plugins: {
+                        title: {
+                            display: true,
+                            text: 'Similarity Scores Across Algorithms'
+                        },
+                        tooltip: {
+                            callbacks: {
+                                label: function(context) {
+                                    return `${context.dataset.label}: ${context.raw.toFixed(1)}%`;
+                                }
+                            }
+                        }
+                    }
+                }
+            });
+        }
+
+        // Utility functions
+        function showAlert(message, type = 'info') {
+            const alert = document.createElement('div');
+            alert.className = `alert alert-${type}`;
+            alert.innerHTML = `
+                <i class="fas fa-${type === 'info' ? 'info-circle' : type === 'success' ? 'check-circle' : type === 'warning' ? 'exclamation-triangle' : 'exclamation-circle'}"></i>
+                <div>${message}</div>
+            `;
+            
+            resultsContainer.innerHTML = '';
+            resultsContainer.appendChild(alert);
+            
+            if (type === 'success') {
+                setTimeout(() => {
+                    if (alert.parentNode) {
+                        alert.parentNode.removeChild(alert);
+                    }
+                }, 3000);
+            }
+        }
+        
+        function clearAll() {
+            state.targetText = '';
+            state.processedText = '';
+            state.tokens = [];
+            state.kgrams = [];
+            state.references = [];
+            state.results = null;
+            
+            targetText.value = '';
+            processedText.textContent = 'No text processed yet. Click "Preprocess Text" to begin.';
+            kgramPreview.textContent = 'No k-grams generated yet.';
+            resultsContainer.innerHTML = `
+                <div class="alert alert-info">
+                    <i class="fas fa-info-circle"></i>
+                    <div>
+                        <strong>Ready to analyze</strong>
+                        <p>Preprocess your text and add reference documents, then click "Check Plagiarism" to see results from all four algorithms.</p>
+                    </div>
+                </div>
+            `;
+            
+            tokenCount.textContent = '0';
+            kgramCount.textContent = '0';
+            refCount.textContent = '0';
+            uniqueKgrams.textContent = '0';
+            
+            targetFile.value = '';
+            targetFileInfo.innerHTML = '';
+            refFiles.value = '';
+            refFileList.innerHTML = '';
+            
+            showAlert('All data cleared successfully', 'success');
+        }
+
+        // Initialize
+        function init() {
+            state.kValue = parseInt(kValue.value) || 3;
+            updateRefFileList();
+        }
+
+        // Start the application
+        init();
+    </script>
+</body>
+</html>
