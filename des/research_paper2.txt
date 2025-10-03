@@ -1,0 +1,582 @@
+ 
+
+DeepAllergy: A Deep Learning Approach for 
+Accurate and Rapid Food Allergen Detection 
+ 
+
+Abstract—With food allergies becoming more common, The Vision Transformer (ViT) [6] is an innovative 
+technological developments provide new chances for approach to image classification that differs from the typical 
+enhancing safety and reducing hazards related to allergen convolutional neural networks (CNNs) by incorporating 
+exposure. Common allergens like milk, eggs, and peanuts can natural language processing-inspired self-attention 
+go unnoticed in a variety of food items, putting allergic processes. ViT provides a viable substitute for image 
+individuals at a constant risk. This paper explores the classification tasks by identifying global dependencies in 
+intersection of deep learning and allergen detection, aiming to images, exhibiting comparable performance and scalability 
+evaluate the performance of state-of-the-art models such as 
+
+on a wide range of datasets. YOLOv8 [7] with its 
+Vision Transform (VIT), YOLOv8, and EfficientNet with 
+
+remarkable speed and precision, offers real-time object 
+minimal fine-tuning, while addressing the pressing need for 
+
+detection in images, marking a breakthrough in the field. It 
+swift and effective allergen identification in the food industry. 
+
+simplifies picture classification by using a single neural 
+The dataset used for this comparative study consists of 6271 
+food images and is available on Kaggle. The model utilizes a network to forecast bounding boxes and class probabilities 
+
+textual dataset of food ingredients to identify the presence of straight from entire images. 
+allergens in the food. EfficientNet achieved a peak accuracy EfficientNet’s [8] scalable and effective convolutional 
+of 92.28%. neural network design transforms the image classification 
+
+space. EfficientNet, which was created through a 
+Keywords—Allergens, Food dishes, Vision Transformer 
+
+meticulous scaling technique, balances computational 
+(ViT), YOLOv8, EfficientNet, XGBoost, BERT, CNN. 
+
+efficiency with model com- plexity, making it an appealing 
+I. INTRODUCTION choice for a variety of image classification applications. 
+
+Modern recipes using unique ingredients [1] and This paper presents a thorough comparative analysis of 
+evolving culinary techniques have not only piqued interest three prominent deep learning models—Vision 
+but also sparked concerns about allergic reactions. Transformer (ViT), YOLOv8, and EfficientNet—in the 
+Seemingly neutral ingredients are now known to be possible context of food classification and allergen detection. 
+allergens, which puts people with sensitivities or intolerance Through careful testing in a comparable setting, the study 
+in danger [2]. evaluates each model’s efficacy, precision, and efficiency in 
+
+handling these crucial tasks to identify the model with the 
+Food allergies have a widespread effect that goes 
+
+best performance. 
+beyond simple discomfort [3] and often has serious health 
+implications for those who are affected. Food allergies can Some dietary allergens can induce severe symptoms 
+cause anything from little discomfort to potentially fatal from allergies, ranging from minor symptoms to potentially 
+anaphylaxis, making them a continual threat to human fatal diseases like anaphylaxis. People’s awareness of the 
+health and welfare [4]. This paper aims to evaluate and possible health implications of allergenic substances in food 
+compare the performance of the Vision Information is growing as the prevalence of food allergies rises. In recent 
+Transform (ViT), YOLOv8, and EfficientNet models in years, there has been a rise in the number of reports of food 
+classifying food items and detecting allergens within them allergies. Accurately identifying allergens in food products 
+[5]. By analyzing their effectiveness in these tasks, we seek is crucial, especially as the number of people suffering from 
+to identify the pre-defined model that excels in image allergies rises. 
+classification with the least amount of fine- tuning. 
+
+979-8-3503-8436-9/24/$31.00©2024 IEEE
+
+2225
+Authorized licensed use limited to: BRACT's Vishwakarma Institute Pune. Downloaded on August 04,2025 at 07:10:09 UTC from IEEE Xplore.  Restrictions apply. 
+
+2024 10th International Conference on Advanced Computing and Communication Systems (ICACCS) | 979-8-3503-8436-9/24/$31.00 ©2024 IEEE | DOI: 10.1109/ICACCS60874.2024.10717042
+
+
+
+ 
+2024 10th International Conference on Advanced Computing and Communication Systems (ICACCS) 
+
+II. RELATED   WORKS This article [14] proposes a machine-learning approach 
+to predict the allergenicity of plant proteins. This study uses 
+
+The article [9] discusses deep learning models such as 
+the sequence and physicochemical properties of amino 
+
+BERT and ensemble learning models such as LightGBM 
+acids to create a classification system to distinguish non-
+
+and XGBoost to predict allergenicity in food and protein. It 
+allergenic and non-allergenic proteins. Feature extraction 
+
+compares the performance of these models and 
+and selection methods are used to improve model 
+
+demonstrates the accuracy and generalizability of the BERT 
+performance. This article discusses the practices and their 
+
+deep learning model. The study also highlights the need for 
+effectiveness and acknowledges financial support. The 
+
+further validation with wet tests and addresses the 
+selection process increased the accuracy of the model, and 
+
+development of online tools to their standards. 
+the SVM classifier outperformed other classifiers, 
+
+This article [10] discusses the use of convolutional indicating an improvement in classification accuracy. 
+neural networks (CNN) for food allergy detection and the 
+
+This article [15] presents a computational method called 
+development of methods to detect and identify food 
+
+DFLAP to detect misfolded proteins. This method 
+allergies with food images. The main aim of the paper is to 
+
+outperforms existing methods in terms of specificity and 
+develop a system to diagnose and identify food allergies 
+
+sensitivity and can distinguish between allergens and non-
+with food images, specifically using transformation learning 
+
+allergens in the protein family. This study evaluates the 
+(ResNet-50) and neural networks (CNN) for image 
+
+performance of DFLAP and compares it with other 
+classification. The article aims to create a framework that 
+
+bioinformatics methods, addressing issues such as 
+can manage the process of food allergies, identification, and 
+
+parameter selection and homology bias. The DFLAP 
+classification. 
+
+method outperforms existing bioinformatics methods in 
+The article [11] presents a framework for identifying terms of specificity and sensitivity. It exhibits high 
+
+allergens and nutrients in fruits and packaged foods with specificity and sensitivity in the detection of allergens and 
+deep learning and OCR. Discusses the use of CNN models, is superior to other methods in terms of specificity and 
+data preparation, modeling, and distribution models. The sensitivity. The DFLAP method assigned antibodies to the 
+results and discussion include a data summary, model Swiss-Prot library to a lower fraction than previously 
+training, and performance evaluation. The system is published data with comparable results, thus demonstrating 
+designed to provide a user application to detect allergens greater specificity. Additionally, DFLAP is the first in silico 
+and nutritional information in foods. The accuracy of the detector to demonstrate the ability to discriminate between 
+model is 97.37%. The main goal of the process described in allergens and non-allergens within a protein family, 
+this article is to create a user-friendly application using deep showing superior sensitivity and specificity compared to 
+learning and OCR to detect allergens and nutrients in fruit those that already have a pathway. 
+and packaged foods. The framework involves training 
+
+In this paper [16], pre-trained CNN models (AlexNet 
+multiple CNN models, selecting the VGG16 model as the 
+
+and VGG16) are used for feature extraction in addition to 
+best model, fine-tuning the model, and uploading it to the 
+
+Support Vector Machines (SVM) for food classification. 
+cloud. The app is designed to provide users with 
+
+The paper [16] proposes support vector machines and deep 
+information about nutrients and allergens in foods.  
+
+features classes. The feature is extracted using a CNN 
+In this paper [12] the author used Genetic algorithms and model, and its combination determines the optimal order for 
+
+mixed learning models to identify and classify peptides by classification. Their accuracy was 79.86%. 
+combining classification technologies based on 
+
+Raza Yunus et al. presented a deep learning approach 
+evolutionary genetic algorithms. This technique has been 
+
+for real-time food price prediction [17]. To recognize foods 
+used to identify anti-inflammatory peptides. Integrative 
+
+from photos and extract characteristics and content from 
+learning has been ex- tended to identify anti-inflammatory 
+
+text, deep learning algorithms are employed. High 
+peptides and neuropeptides by combining various machine 
+
+classification accuracy is attained by the system, which also 
+learning methods such as support vector machine, random 
+
+incorporates Food-101 dataset expansions. The article also 
+forest, and K populations. 
+
+includes estimates of food size and calorie content, research 
+In this study [13] the author introduces DeepAlgPro, a on body weight and cancer risk, and mobile apps that track 
+
+deep learning framework for predicting dysfunctional diet and activity. Several CNN models that have been 
+proteins. The model uses convolutional neural networks and trained beforehand are utilized to describe foods and 
+MHSA mechanisms to achieve accurate prediction. This estimate their nutritional worth during the planning stage. 
+study demonstrates the translational model and its potential VGG-16, VGG-19, Inception-v3, Inception-v4, and ResNet 
+to identify new allergens. DeepAlgPro successfully are the models that are employed. However, Inception-v3 
+identified allergens using a deep learning framework that and Inception-v4 were selected as appropriate and well-
+combines a neural network with the MHSA mechanism to tuned models on the dataset based on their performance on 
+learn the properties of allergens. This model supports the the dataset. 
+use of convolution kernels as motif detectors to predict 
+
+This study examined dietary patterns and their relation- 
+protein allergenicity, similar to the 6-8 mer hit principle for 
+
+ship to adult Filipinos’ risk of non-communicable diseases 
+allergen identification. It integrates coding, feature 
+
+(NCDs) in [18]. According to this study, the general 
+extraction, and double-label classification modules to 
+
+nutritional quality of Filipino adults was found to be poor, 
+transform protein sequences into matrices, extract important 
+
+and three key nutritional components were identified: sugar-
+features, detect amino acid connections, and use all layers 
+
+sweetened beverages, meat, fish, rice, and snacks. Eating 
+to determine whether there is too much protein damage. 
+
+meat and drinking sugar-sweetened beverages, having high 
+
+2226
+Authorized licensed use limited to: BRACT's Vishwakarma Institute Pune. Downloaded on August 04,2025 at 07:10:09 UTC from IEEE Xplore.  Restrictions apply. 
+
+
+
+ 
+2024 10th International Conference on Advanced Computing and Communication Systems (ICACCS) 
+
+cholesterol, and having high triglycerides were linked to an dishes. The goal of this research is to enhance the nutritional 
+increased risk of obesity/obesity; on the other hand, fruits, value and overall health benefits of South Indian food, 
+vegetables, and snacks were linked to an increased risk of however, more comprehensive and varied data are required. 
+non-communicable diseases (NCDs). This study Future research will focus on enhancing both the user 
+emphasizes how important it is to implement efficient experience and calorie estimation accuracy. 
+nutrition programs to enhance nutritional status and lower 
+
+In studies [20] and [21], a range of machine learning 
+the risk of disease in the older Filipino population. 
+
+algorithms and deep learning methodologies were utilized 
+The CNN models VGG16 and ResNet50 are used in this to address a spectrum of health issues, encompassing 
+
+paper [19] to classify and forecast the calorie content of conditions such as lung diseases, brain disorders, and the 
+South Indian cuisine. The model outperformed the VGG-16 examination of maternal mortality ratios by researchers. 
+model, achieving 71% accuracy in categorizing 11 different 
+
+ 
+Fig. 1. Proposed Architecture. 
+
+III. P In the field of computer vision, Vision Transformers 
+ROPOSED METHODOLOGY 
+
+(ViTs) provide a notable breakthrough in image 
+In this study, we aim to compare the performance of classification. The image is split into patches in ViTs, which 
+
+three pre-trained image classification models: Vision are then flattened and processed like token sequences. By 
+Transformer (ViT), YOLOv8, and EfficientNet and detect analyzing these tokens through several transformer layers, 
+the allergen present in the food. These models are trained on the model can identify the local and distant dependencies in 
+a publicly available dataset from Kaggle, with minimal fine- the image. ViTs can efficiently learn relationships between 
+tuning. The dataset comprises twenty Indian food classes, several patches and extract significant information for 
+totaling 6271 images, ranging from beverages like chai to categorization through self- attention mechanisms. Tasks 
+snacks like samosa. The presence of allergens in the food is requiring holistic knowledge and context, such as object 
+determined using a model that is trained on the dataset recognition in complex visual settings, are particularly well-
+containing food ingredients and allergen information, which suited for ViTs because of their capacity to handle input 
+is accessible on Kaggle. The architecture diagram for the images of arbitrary size and collect fine-grained features 
+study is shown in Fig. 1. across the entire image. 
+
+A. YOLOv8 C. EfficientNet 
+”You Only Look Once,” or ”YOLO,” is a prevalent EfficientNet, developed by Google, balances model size 
+
+object detection algorithm in the computer vision domain. and accuracy across various dimensions, including depth, 
+Although YOLO is primarily intended for object detection width, and resolution, using a revolutionary compound 
+tasks, its capability to locate and identify objects in an image scaling technique. EfficientNet outperforms existing CNN 
+enables it to indirectly contribute to picture classification. architectures like ResNet and MobileNet, particularly in 
+YOLO maintains efficiency while achieving great applications like object detection and image classification, 
+precision. Its de- sign offers accurate item localization and by systematically scaling these dimensions while keeping 
+classification by accurately predicting bounding boxes and computing costs lower. Because of this, EfficientNet can be 
+class probabilities. One can extract areas of interest (ROIs) deployed without compromising performance on devices 
+containing objects and utilize them as input for image with limited resources, such as embedded systems or mobile 
+classification models by utilizing YOLO’s object phones. 
+identification capabilities. When dealing with various and 
+complicated objects of interest, this method enables deeper D. Methodology 
+analysis and classification of individual objects. The proposed flow chart for this model is shown in. The 
+
+key steps involved in the proposed architecture are: 
+B. Vision Transformer (ViT) 
+
+2227
+Authorized licensed use limited to: BRACT's Vishwakarma Institute Pune. Downloaded on August 04,2025 at 07:10:09 UTC from IEEE Xplore.  Restrictions apply. 
+
+
+
+ 
+2024 10th International Conference on Advanced Computing and Communication Systems (ICACCS) 
+
+1) Data collection: For this study, two distinct datasets 
+from Kaggle were utilized. The first dataset is a set of food 
+images [22], each labeled with the names of the food. This 
+dataset is the main source for training image classification 
+models and offers a wide variety of food items. The second 
+dataset [23] is in CSV format and has labels for food names 
+and related allergens. Each entry in this dataset includes the 
+name of a food item and the allergens it may contain. 
+
+2) Data splitting: The dataset containing 6271 images 
+was divided into three parts: training, validation, and 
+testing. Roughly 80% of the data was used for training the 
+model, while 10% each was reserved for validation and 
+testing purposes.  
+
+3) YOLOv8 model: The ultralytics package is installed Fig. 2. YOLO V8 loss. 
+
+to work with the YOLOv8 model, which is then imported 
+TABLE I. PERFORMANCE COMPARISON OF MODEL 
+
+for use. In this study, the standard YOLOv8 model, along 
+with pre-defined weights, is employed. The model is Val 
+
+ Accuracy Loss Val loss 
+accuracy 
+
+trained by providing the dataset as input, and once training 
+is completed, the trained model is saved for future use in YOLOv8 92.05% - 0.3 2.2 
+
+making predictions. The localization loss function for the Vision 
+Transformer 52.04% 47.06% 2.84 2.79 
+
+YOLO model is shown in Fig 1. (ViT) 
+
+EfficientNet 92.28 85.16% 2.2 2.2 
+
+IV. RESULTS AND DISCUSSION 
+
+The results of our investigation into three deep learning 
+ 
+
+models—YOLOv8, Vision Transformer, and EfficientNet 
+4) Vision Transformer (ViT) model: The vit-keras B4—reveal distinct performance variations in the 
+
+package is utilized to incorporate the Vision Transformer classification of food dishes and allergen detection. The 
+model, followed by appending a flatten layer, an extra performance of all three models are shown in Table I 
+
+dense layer, a dropout layer, and an output layer to the A. Results of YOLOv8 
+predefined model. The model is trained and fine-tuned 
+
+The results from YOLOv8 showcase its commendable 
+using the dataset. The ViT model transforms the input performance in food dish classification and allergen 
+image X into a sequence of embeddings Z using the patch detection, achieving a peak accuracy of 92.05%. 
+embedding process: Throughout the training process, YOLOv8 demonstrated 
+
+strong convergence, with an average training loss of 0.3. 
+ Z = PatchEmbedding(X; θpatch, θproj) (2) Despite minor fluctuations, the model maintained 
+
+robustness during validation, showcasing an average 
+where Z = z1, z2, ..., zN is a sequence of embed- dings, validation loss of 2.2. These findings underscore 
+
+{ } 
+N is the total number of patches, and θpatch and θproj are the YOLOv8’s effectiveness in accurately identifying food 
+
+items within the dataset, affirming its potential utility in 
+parameters of the patch embedding and projection layers, 
+respectively. It used these patches to train the model. real-world applications requiring precise and efficient food 
+
+recognition capabilities. The accuracy graph and the loss 
+5) EfficientNet model: The EfficientNet B4 model is graph is shown in Fig. 2 and Fig. 3. 
+
+used in this study. The pre-defined model and all the 
+weights are imported. The image size and batch size are 
+tweaked as the model uses the whole system’s hardware. 
+
+6) Evaluation and performance comparison: The 
+trained models are then evaluated using the testing data and 
+the performance of the models is compared with each other. 
+
+7) Allergen detection: The output of EfficientNet is 
+passed to the allergen model. The allergen present in the 
+food dish is detected by using the model that was trained 
+on the food ingredients and allergens dataset. It predicts the 
+possible allergens present in the food dish. 
+
+8) Objective of comparing: The objective of this 
+comparison is to show which deep learning methodology is 
+very effective and more accurate.  
+
+Fig. 3. YOLO V8 Accuracy. 
+
+2228
+Authorized licensed use limited to: BRACT's Vishwakarma Institute Pune. Downloaded on August 04,2025 at 07:10:09 UTC from IEEE Xplore.  Restrictions apply. 
+
+
+
+ 
+2024 10th International Conference on Advanced Computing and Communication Systems (ICACCS) 
+
+C. Results of EfficientNet 
+
+EfficientNet emerged as the standout performer in our 
+study, demonstrating exceptional accuracy in food dish 
+classification. With a peak accuracy of 92.28%, 
+EfficientNet consistently showcased its ability to accurately 
+classify food items within the dataset. Throughout the 
+training phase, the model maintained stability and 
+convergence, reflected in an average training loss of 2.2. 
+Similarly, during validation, EfficientNet exhibited robust 
+performance, with an average validation loss also standing 
+at 2.2. These results highlight the superiority of EfficientNet 
+in effectively recognizing and categorizing food dishes, 
+positioning it as the top-performing model among all 
+
+ 
+evaluated architectures. The exceptional performance of 
+
+Fig. 4. ViT Accuracy. EfficientNet underscores its efficiency and efficacy in 
+handling complex image recognition tasks. The accuracy 
+
+B. Results of Vision Transformer and loss trends for this model is shown in Fig. 6 and Fig. 7. 
+The results obtained from the Vision Transformer (ViT) 
+
+model reveal its performance in food dish classification, 
+albeit with comparatively lower accuracy compared to its 
+counter- parts. ViT achieved a peak accuracy of 52.04%, 
+indicating its ability to classify food items within the 
+dataset. However, the model exhibited challenges during 
+training, reflected in an average training loss of 2.84. 
+Moreover, its performance during validation remained 
+suboptimal, with an average validation loss of 2.79. These 
+results position ViT as the least effective among the three 
+models evaluated in this study. Despite its potential in other 
+domains, such as natural language processing and image 
+recognition, further optimization may be necessary to fully 
+harness ViT’s capabilities for food classification tasks. The 
+
+ 
+accuracy and loss trends are shown in Fig. 4 and Fig. 5. 
+
+Fig. 7. EfficientNet Loss. 
+
+V. CONCLUSION 
+
+In this study, we evaluated three deep learning models—
+YOLOv8, Vision Transformer, and EfficientNet B4—for 
+the classification of food and allergen detection using a 
+dataset comprising 6271 images, with 5016 images 
+allocated for training. Our experiments revealed 
+EfficientNet B4 as the top performer, demonstrating 
+superior accuracy in food classification, followed by 
+YOLOv8. Despite its reputation in other domains, Vision 
+Transformer exhibited comparatively lower performance in 
+this task. 
+
+ In future research, expanding the scope of our 
+Fig. 5. Vit Loss. investigation to include a broader range of food categories 
+
+and allergens could provide deeper insights into the 
+performance and applicability of our models across diverse 
+dietary contexts. Additionally, exploring methods to 
+incorporate user feedback and preferences into the allergen 
+prediction process could lead to more personalized and 
+accurate results. Furthermore, collaborating with 
+nutritionists, healthcare professionals, and food industry 
+experts could provide valuable domain knowledge. 
+
+In addition to its implications for food classification, this 
+research paper holds significant relevance in the realms of 
+food safety and allergen detection. This study not only 
+advances the field of computer vision but also underscores 
+
+ its potential impact on broader issues surrounding food 
+safety and allergen management. 
+
+Fig. 6. EfficientNet Accuracy. 
+
+2229
+Authorized licensed use limited to: BRACT's Vishwakarma Institute Pune. Downloaded on August 04,2025 at 07:10:09 UTC from IEEE Xplore.  Restrictions apply. 
+
+
+
+ 
+2024 10th International Conference on Advanced Computing and Communication Systems (ICACCS) 
+
+REFERENCES tional conference on advanced computing and communication 
+systems (ICACCS), vol. 1, pp. 72–77, IEEE, 2021. 
+
+[1] N. R. Kumar and M. V. Babu, “Real time south indian food 
+[12] A. Kumar and P. S. Rana, “A deep learning based ensemble 
+
+recognition,” International Journal of Engineering Research 
+approach for protein allergen classification,” PeerJ Computer 
+
+Technology, 2018. 
+Science, vol. 9, p. e1622, 2023. 
+
+[2] N. Darapaneni, V. Singh, Y. S. Tarkar, S. Kataria, N. Bansal, A. 
+[13] C. He, X. Ye, Y. Yang, L. Hu, Y. Si, X. Zhao, L. Chen, Q. Fang, Y. 
+
+Kharade, and A. R. Paduri, “Food image recognition and calorie 
+Wei, F. Wu, et al., “Deepalgpro: an interpretable deep neural 
+
+prediction,” in 2021 IEEE International IOT, Electronics and 
+network model for predicting allergenic proteins,” Briefings in 
+
+Mechatronics Conference (IEMTRONICS), IEEE, 2021. 
+Bioinformatics, vol. 24, no. 4, p. bbad246, 2023. 
+
+[3] A. P. Yash Gosalia, Meet Karnik, “Estimation of nutritional values 
+[14] M. Nedyalkova, M. Vasighi, A. Azmoon, L. Naneva, and V. 
+
+of food using inception v3,” International Research Journal of 
+Simeonov, “Sequence-based prediction of plant allergenic proteins: 
+
+Engineering and Technology, 2021. 
+Machine learn- ing classification approach,” ACS omega, vol. 8, no. 
+
+[4] W. Wu and J. Yang, “Fast food recognition from videos of eating 4, pp. 3698–3704, 2023. 
+for calorie estimation,” in 2009 IEEE International Conference on 
+
+[15] D. Soeria-Atmadja, T. Lundell, M. Gustafsson, and U. Hammerling, 
+Multimedia and Expo, pp. 1210–1213, IEEE, 2009. 
+
+“Computational detection of allergenic proteins attains a new level 
+[5] M. Polling, C. Li, L. Cao, F. Verbeek, L. A. de Weger, J. Belmonte, of accuracy with in silico variable-length peptide extraction and 
+
+C. De Linares, J. Willemse, H. de Boer, and B. Gravendeel, “Neural machine learning,” Nucleic acids research, vol. 34, no. 13, pp. 3779–
+networks for increased accuracy of allergenic pollen monitoring,” 3793, 2006. 
+Sci- entific Reports, vol. 11, no. 1, p. 11357, 2021. 
+
+[16] A. S  ̧engu¨r, Y. Akbulut, and U¨ . Budak, “Food image classification 
+[6] M. A. Rostami, B. Balmaki, L. A. Dyer, J. M. Allen, M. F. Sallam, with deep features,” in 2019 international artificial intelligence and 
+
+and F. Frontalini, “Efficient pollen grain classification using pre- data processing symposium (IDAP), pp. 1–6, Ieee, 2019. 
+trained convolutional neural networks: a comprehensive study,” 
+
+[17] R. Yunus, O. Arif, H. Afzal, M. F. Amjad, H. Abbas, H. N. Bokhari, 
+Journal of Big Data, vol. 10, no. 1, p. 151, 2023. 
+
+S. T. Haider, N. Zafar, and R. Nawaz, “A framework to estimate the 
+[7] F. Romadhon, F. Rahutomo, J. Hariyono, S. Sutrisno, M. E. nutritional value of food in real time using deep learning 
+
+Sulistyo, M. H. Ibrahim, and S. Pramono, “Food image detection techniques,” IEEE Access, vol. 7, pp. 2643–2652, 2018. 
+system and calorie content estimation using yolo to control calorie 
+
+[18] I. Angeles-Agdeppa, Y. Sun, and K. V. Tanda, “Dietary pattern and 
+intake in the body,” in E3S Web of Conferences, vol. 465, p. 02057, 
+
+nutrient intakes in association with non-communicable disease risk 
+EDP Sciences, 2023. 
+
+factors among filipino adults: A cross-sectional study,” Nutrition 
+[8] R. Kaur, R. Kumar, and M. Gupta, “Deep neural network for food journal, vol. 19, no. 1, pp. 1–13, 2020. 
+
+image classification and nutrient identification: A systematic 
+[19] V. Aravinth, G. Aakash, and T. Preethiya, “Calorie estimation of real 
+
+review,” Reviews in Endocrine and Metabolic Disorders, pp. 1–21, 
+time south indian food data using convolutional neural network,” in 
+
+2023. 
+2023 International Conference on Evolutionary Algorithms and Soft 
+
+[9] L. Wang, D. Niu, X. Zhao, X. Wang, M. Hao, and H. Che, “A Computing Techniques (EASCT), pp. 1–5, IEEE, 2023. 
+comparative analysis of novel deep learning and ensemble learning 
+
+[20] S. Bharuka, A. Gupta, et al., “Comparative analysis of time series 
+models to predict the allergenicity of food proteins,” Foods, vol. 10, 
+
+models for maternal mortality ratio forecasting,” in 2023 
+no. 4, p. 809, 2021. 
+
+International Conference on Sustainable Communication Networks 
+[10] B. Senapati, J. R. Talburt, A. B. Naeem, and V. J. R. Batthula, and Application (ICSCNA), pp. 1095–1102, IEEE, 2023. 
+
+“Transfer learning based models for food detection using resnet-50,” 
+[21] P. Mohan, T. Sabarwal, and T. Preethiya, “Indian sign language 
+
+in 2023 IEEE International Conference on Electro Information 
+character recognition system,” in 2023 4th International Conference 
+
+Technology (eIT), pp. 224–229, IEEE, 2023. 
+on Electron- ics and Sustainable Communication Systems (ICESC), 
+
+[11] B. Rohini, D. M. Pavuluri, L. N. Kumar, V. Soorya, and J. Aravinth, pp. 1029–1034, IEEE, 2023. 
+“A framework to identify allergen and nutrient content in fruits and 
+
+[22] “Indian Food Classification,” 2 2021. 
+packaged food using deep learning and ocr,” in 2021 7th Interna- 
+
+[23] “Food ingredients and allergens,” 5 2023.
+
+ 

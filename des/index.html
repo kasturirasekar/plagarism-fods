@@ -7,6 +7,7 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <style>
+        /* CSS remains the same as previous version */
         :root {
             --primary: #2563eb;
             --primary-dark: #1d4ed8;
@@ -538,7 +539,7 @@
                         <div class="file-upload" id="targetFileUpload">
                             <i class="fas fa-cloud-upload-alt"></i>
                             <p>Click to upload target document</p>
-                            <input type="file" id="targetFile" accept=".txt,.doc,.docx,.pdf" style="display: none;">
+                            <input type="file" id="targetFile" accept=".txt" style="display: none;">
                         </div>
                         <div id="targetFileInfo" class="file-list"></div>
                     </div>
@@ -605,7 +606,7 @@
                     <div class="file-upload" id="refFileUpload">
                         <i class="fas fa-plus-circle"></i>
                         <p>Click to add reference documents</p>
-                        <input type="file" id="refFiles" multiple accept=".txt,.doc,.docx,.pdf" style="display: none;">
+                        <input type="file" id="refFiles" multiple accept=".txt" style="display: none;">
                     </div>
                     
                     <div id="refFileList" class="file-list"></div>
@@ -692,13 +693,7 @@
             kgrams: [],
             references: [],
             kValue: 3,
-            results: null,
-            algorithms: [
-                { name: 'Jaccard', formula: '|A∩B| / |A∪B|' },
-                { name: 'Cosine', formula: 'A·B / (||A|| * ||B||)' },
-                { name: 'Containment', formula: '|A∩B| / |A|' },
-                { name: 'Dice', formula: '2|A∩B| / (|A| + |B|)' }
-            ]
+            results: null
         };
 
         // DOM elements
@@ -796,8 +791,7 @@
                     state.references.push({
                         name: file.name,
                         content: e.target.result,
-                        tokens: [],
-                        kgrams: []
+                        file: file
                     });
                     
                     updateRefFileList();
@@ -883,8 +877,8 @@
                 (state.kgrams.length > 50 ? `\n\n... and ${state.kgrams.length - 50} more` : '');
         }
 
-        // Plagiarism checking
-        function checkPlagiarism() {
+        // Real plagiarism checking with backend integration
+        async function checkPlagiarism() {
             if (state.tokens.length === 0) {
                 showAlert('Please preprocess the text first', 'warning');
                 return;
@@ -899,57 +893,112 @@
             checkBtn.innerHTML = '<div class="loading"></div> Analyzing...';
             checkBtn.disabled = true;
             
-            // Simulate backend processing
-            setTimeout(() => {
-                simulateBackendAnalysis();
-                
+            try {
+                // Prepare files for backend
+                await callBackend();
+            } catch (error) {
+                console.error('Error:', error);
+                showAlert('Error analyzing documents: ' + error.message, 'danger');
+            } finally {
                 checkBtn.innerHTML = '<i class="fas fa-search"></i> Check Plagiarism';
                 checkBtn.disabled = false;
-            }, 2000);
+            }
         }
         
-        function simulateBackendAnalysis() {
-            // Simulate backend response with all four algorithms
-            const results = {
+        async function callBackend() {
+            // In a real implementation, this would call a server API
+            // For this demo, we'll simulate the backend processing in JavaScript
+            // using the same algorithms as the C backend
+            
+            const results = await simulateBackendProcessing();
+            displayResults(results);
+        }
+        
+        async function simulateBackendProcessing() {
+            // This simulates what the C backend would do
+            // Using the same algorithms implemented in JavaScript
+            
+            const targetKgramsSet = new Set(state.kgrams);
+            const comparisons = [];
+            
+            for (const ref of state.references) {
+                // Preprocess reference text
+                const refText = ref.content.toLowerCase()
+                    .replace(/[^\w\s']/g, ' ')
+                    .replace(/\s+/g, ' ')
+                    .trim();
+                
+                const refTokens = refText.split(/\s+/).filter(token => token.length > 0);
+                
+                // Generate reference k-grams
+                const refKgrams = [];
+                for (let i = 0; i <= refTokens.length - state.kValue; i++) {
+                    refKgrams.push(refTokens.slice(i, i + state.kValue).join(' '));
+                }
+                const refKgramsSet = new Set(refKgrams);
+                
+                // Calculate similarities
+                const intersection = new Set([...targetKgramsSet].filter(x => refKgramsSet.has(x)));
+                const union = new Set([...targetKgramsSet, ...refKgramsSet]);
+                
+                const jaccard = union.size > 0 ? intersection.size / union.size : 0;
+                const cosine = intersection.size / (Math.sqrt(targetKgramsSet.size) * Math.sqrt(refKgramsSet.size));
+                const containment = targetKgramsSet.size > 0 ? intersection.size / targetKgramsSet.size : 0;
+                const dice = (2 * intersection.size) / (targetKgramsSet.size + refKgramsSet.size);
+                const overall = (jaccard + cosine + containment + dice) / 4;
+                
+                // Find common phrases
+                const commonPhrases = findCommonPhrases(state.tokens, refTokens);
+                
+                comparisons.push({
+                    filename: ref.name,
+                    jaccard: jaccard,
+                    cosine: cosine,
+                    containment: containment,
+                    dice: dice,
+                    overall: overall,
+                    matching_kgrams: intersection.size,
+                    common_phrases: commonPhrases
+                });
+            }
+            
+            return {
                 target_stats: {
                     tokens: state.tokens.length,
                     kgrams: state.kgrams.length,
                     k_value: state.kValue,
-                    unique_kgrams: new Set(state.kgrams).size
+                    unique_kgrams: targetKgramsSet.size
                 },
-                comparisons: state.references.map(ref => {
-                    // Simulate different similarity scores for each algorithm
-                    const baseSimilarity = Math.random() * 0.6;
-                    
-                    return {
-                        filename: ref.name,
-                        jaccard: Math.min(baseSimilarity + (Math.random() * 0.2 - 0.1), 1.0),
-                        cosine: Math.min(baseSimilarity + (Math.random() * 0.2 - 0.1), 1.0),
-                        containment: Math.min(baseSimilarity + (Math.random() * 0.2 - 0.1), 1.0),
-                        dice: Math.min(baseSimilarity + (Math.random() * 0.2 - 0.1), 1.0),
-                        matching_kgrams: Math.floor(baseSimilarity * state.kgrams.length),
-                        common_phrases: generateSamplePhrases()
-                    };
-                })
+                comparisons: comparisons
             };
-            
-            // Calculate overall scores
-            results.comparisons.forEach(comp => {
-                comp.overall = (comp.jaccard + comp.cosine + comp.containment + comp.dice) / 4;
-            });
-            
-            displayResults(results);
         }
         
-        function generateSamplePhrases() {
+        function findCommonPhrases(targetTokens, refTokens) {
             const phrases = [];
-            if (state.tokens.length >= 5) {
-                for (let i = 0; i < 3; i++) {
-                    const start = Math.floor(Math.random() * (state.tokens.length - 4));
-                    phrases.push(state.tokens.slice(start, start + 5).join(' '));
+            const targetText = targetTokens.join(' ');
+            const refText = refTokens.join(' ');
+            
+            // Look for phrases of different lengths
+            for (let len = 7; len >= 3 && phrases.length < 5; len--) {
+                for (let i = 0; i <= targetTokens.length - len && phrases.length < 5; i++) {
+                    const phrase = targetTokens.slice(i, i + len).join(' ');
+                    if (refText.includes(phrase)) {
+                        // Check if it's not a substring of an already found phrase
+                        let isSubstring = false;
+                        for (const existingPhrase of phrases) {
+                            if (existingPhrase.includes(phrase) || phrase.includes(existingPhrase)) {
+                                isSubstring = true;
+                                break;
+                            }
+                        }
+                        if (!isSubstring) {
+                            phrases.push(phrase);
+                        }
+                    }
                 }
             }
-            return phrases;
+            
+            return phrases.slice(0, 5);
         }
 
         // Results display
@@ -1109,14 +1158,6 @@
             
             resultsContainer.innerHTML = '';
             resultsContainer.appendChild(alert);
-            
-            if (type === 'success') {
-                setTimeout(() => {
-                    if (alert.parentNode) {
-                        alert.parentNode.removeChild(alert);
-                    }
-                }, 3000);
-            }
         }
         
         function clearAll() {

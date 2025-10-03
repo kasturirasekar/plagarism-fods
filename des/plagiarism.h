@@ -13,6 +13,7 @@
 #define MAX_FILENAME_LENGTH 256
 #define MAX_STRING_LENGTH 100000
 #define HASH_TABLE_SIZE 10007
+#define KGRAM_MAX_LENGTH 10
 
 // Data Structures
 typedef struct TokenNode {

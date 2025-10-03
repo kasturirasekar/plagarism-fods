@@ -1,0 +1,613 @@
+
+Automating Nutritional Claim 
+Verification: The Role of OCR and 
+
+Machine Learning in Enhancing Food 
+ Label Transparency  
+ 
+
+ Abstract: Consumer demand for health and trust in food represents a significant advancement in food safety and 
+products has widely gained attention, leading many transparency, as well as an important initial step towards 
+researchers to call for rich information about food label the automation of claim verification technologies. 
+nutritional content to be transparent and accurate. But 
+
+Keywords: Optical Character Recognition (OCR), 
+nutritional claims such as "organic" or "sugar-free" still 
+
+EasyOCR, Machine Learning, Nutritional Claims 
+have verification problems because misleading labels may 
+
+Verification, Support Vector Machine (SVM), Decision 
+counter the trustworthiness and safety of a consumer. In 
+
+Trees, Ingredient Analysis, Food Safety, Transparency, 
+this paper, we propose a data-driven approach to model 
+
+USDA Standards, Automated Claim Verification, Consumer 
+verification of nutritional claims automatically through 
+
+Trust. 
+Optical Character Recognition and classification 
+algorithms. Furthermore, EasyOCR, a deep-learning OCR 1.INTRODUCTION 
+tool, is used to analyze the ingredient data from the food 
+
+ 
+labels against the nutritional standards defined by the 
+
+In previous years, consumers’ behavior in the food sector can 
+USDA. Classification accuracy: through suggested models 
+
+be associated with the increasing focus on the clarity of 
+in machine learning such as SVM and Decision Trees, they 
+
+information on food labels. The increasing prevalence of 
+classify the binary and multi-category claims. 
+
+consumers’ willingness to buy healthy foods has made them 
+ insistent on knowing how a product is used, its ingredients, 
+The SVM model achieved high strength with binary its nutritional value, and the raw materials used in its creation. 
+verification of claim accuracy and 90% accuracy, while More and more often consumers can encounter the claims 
+Decision trees explained complex, multi-featured claims. “natural”, “organic”, or “sugar-free”, which have become 
+The findings also revealed that this strategy will achieve quite widespread and are considered to be indicators of a 
+providing consumers with improved accessibility to reliable healthier product. The marketplace for nutrition includes all 
+nutritional information, thereby bolstering consumer trust known features like health claims, structure/function claims, 
+in food labeling and smart eating. Not only does this nutrient content claims, and factual claims, among others. To 
+approach streamline the verification process, but it also meet this need, technology-driven verification systems—
+
+ 
+979-8-3315-1809-7/24/$31.00 ©2024 IEEE 1164
+
+Authorized licensed use limited to: BRACT's Vishwakarma Institute Pune. Downloaded on August 04,2025 at 07:08:54 UTC from IEEE Xplore.  Restrictions apply. 
+
+2024 International Conference on IoT Based Control Networks and Intelligent Systems (ICICNIS) | 979-8-3315-1809-7/24/$31.00 ©2024 IEEE | DOI: 10.1109/ICICNIS64247.2024.10823177
+
+
+
+Proceedings of the International Conference on IoT Based Control Networks and Intelligent Systems (ICICNIS-2024)
+IEEE Xplore Part Number: CFP242B2-ART: ISBN: 979-8-3315-1809-7
+
+through OCR and machine learning will offer an efficient based technologies, including tools like EasyOCR, can 
+method of augmenting the transparency of claims by extract fine details about the ingredients and nutritional 
+verifying information in real-time for consumers' better values on product packaging. Then, these algorithms process 
+understanding and reliance on that information. the data extracted to make rulings on claims based on 
+
+standards that may be as stringent as those set by the USDA. 
+At the same time, research done by [1]Colby et al. indicated 
+
+In this regard, the mechanized verification process reduces 
+that other claims often used were consumers’ assertions 
+
+human error but delivers high precision and efficiency in 
+(67.1%), followed by health claims (8.6%), and 
+
+validating the claims. 
+structure/function claims at 5.8%. A survey conducted as part 
+of this study revealed that a substantial number of consumers This significantly impacts consumer trust. A verification 
+prioritize purchasing products with health-related claims. process that is based upon technology provides clear, 
+Nonetheless, most respondents of the survey showed only accurate, and accessible information to be featured on labels 
+moderate trust in the companies when it comes to the about the food, which directly counters many consumer 
+genuineness of these claims. It should be noted that a large complaints about misleading or unclear claims. Consumers 
+number of participants are willing to spend more on the therefore develop an increased level of trust over the accuracy 
+product if it is backed up by some relevant and substantiated of the information, hence enabling them to control their diets. 
+information that is clear and understandable. This opens up a With this level of transparency, credibility for the brand is 
+room for technology-based solutions to tackle user needs and increased, and a well-informed, health-conscious public 
+the actual reliability of the goods at hand. supports an even stronger consumer-food brand relationship. 
+
+By combining machine learning algorithms with OCR, this 
+The modern environment is filled with new technologies 
+
+automated verification process not only reduces human error 
+whose purpose is to improve food transparency. The OCR 
+
+but enhances transparency, giving consumers trustworthy, 
+technology is quite prominent in obtaining streamline textual 
+
+accessible information on food labels that empowers 
+data of food package information and is becoming one of the 
+
+informed dietary choices and strengthens brand trust. 
+most sought-after instances of food packaging marketing. [4] 
+Gornale et al. (2013) have noted that the implementation of  
+OCR systems in particular, their efficiency towards 
+
+II. LITREATURE REVIEW 
+ingredient extraction and coverage expansion, is high and, as 
+such, low cost compared to commercial manual techniques. A. Consumers seek transparency regarding labels of 
+In this context, we seek to automate the collection of food products. 
+ingredient lists from food images using OCR technology, in Recently, transparency in food labeling has become 
+particular, EasyOCR, a high-performance library based on the trend. Consumers are now becoming healthier 
+deep learning. This process not only makes all the steps easier and demanding more information over the products 
+but also increases the accuracy levels of information retrieval. they buy, such as ingredients, nutritional content, 
+In [11]Optical Character Recognition (OCR) systems were and sourcing practices. Results from research reveal 
+found to have advantages due to advanced methodologies that most consumers do not trust food labels and are 
+that permitted change and advancement in their pursuit of confused by the information on packaging. For 
+recognizing specific fonts and designs of packaging and such example, 75% of respondents in a study were 
+improvement in OCR accuracy contributes to broader skeptical over food labeling and many 
+ingredient data extraction ability in diversification of product This suggests that we need to increase transparency 
+labels, which would thus make nutritional information more through more product information to create loyalty. 
+precise and accurate. The consumers will shift brands if another brand has 
+
+more information about its products. The study 
+ Following extraction of ingredient data, machine learning found 37 percent of consumers would switch brands 
+approaches can be used to test this data for conformity with for more transparency that's the competitive 
+nutritional norms. Decision trees as well as support vector advantage of better labeling ([6]Davis et al., 2016). 
+machines are quite ideal for such tasks. This enables the This way, brands that put transparency first can 
+model to learn from a varied dataset that includes both the attract new customers and retain them by creating a 
+valid and invalid nutritional claims. For simultaneous basis for trust in communication. 
+detection and validation of several ingredients in packages,  
+[2] Farokhynia et al. claim the power of applying machine  
+learning along with our strategy to validate nutritional claims 
+
+B. Misleading Nutrition Claims by Companies 
+from product packages. Transparency in food labeling is 
+
+Research has demonstrated that there are many 
+probably one of the most important issues of all time. 
+
+companies that claim to be making nutritious foods, 
+Studies show that people are becoming more likely to switch but that's not the case in reality. [9] Indian Council 
+brands or spend more money on items with clear information of Medical Research even states that health claims 
+about where their ingredients come from. Additionally, made on packaged food products are made just as an 
+proper labeling will increase consumer confidence, safety, attracting device rather than stating a truth. For 
+and quality assurance along the food supply chain. With instance, food carrying the label "sugar-free" could 
+consumers becoming more picky about their diet, businesses carry high amounts of fat or harmful sugars, thereby 
+must adapt by implementing proper verification systems to making the consumer feel they are engaged in a 
+comply with labeling regulations. healthier lifestyle ([9] ICMR Dietary Guidelines, 
+
+2024). The ICMR emphasizes that the word 
+This research adds to the food transparency conversation by 
+
+"natural" is the most misused term in advertising 
+Combined with machine learning, OCR techniques uniquely 
+
+where attention is brought to one or two natural 
+advance the level of transparency in checking nutritional 
+
+components of the product but poorer constituents of 
+claims to that of validating food packaging labeling claims in 
+
+the product are retained. Furthermore, it has been 
+a safe and efficient manner. Specifically, OCR technology-
+
+979-8-3315-1809-7/24/$31.00 ©2024 IEEE 1165
+Authorized licensed use limited to: BRACT's Vishwakarma Institute Pune. Downloaded on August 04,2025 at 07:08:54 UTC from IEEE Xplore.  Restrictions apply. 
+
+
+
+Proceedings of the International Conference on IoT Based Control Networks and Intelligent Systems (ICICNIS-2024)
+IEEE Xplore Part Number: CFP242B2-ART: ISBN: 979-8-3315-1809-7
+
+said that even products labelled as "made with real Techniques like decision trees and SVM facilitate 
+fruit" have only 10% pulp coming from actual fruit effective nutritional assertion validity by 
+so companies may cheat the consumers with being manufacturers under regulatory compliance within 
+healthy products ([9] ICMR Dietary Guidelines, labels ([2]Farokhynia & Krikeb, 2024). This would 
+2024). These examples depict how the misleading help in preparing organizations to respond better to 
+labeling leads the way to confusion among real-time labeling accuracy errors. Moreover, ML 
+consumers and shatters the consumer confidence in models can take on forms of data including the 
+food brands. following: dietary intake and personal health metrics 
+ in order to offer personalized nutritional guidance. 
+
+C. The Role of Technology in Food Label Validation Precision nutrition relates to how technology can 
+  revolutionize how people engage with food labeling 
+To fight against the pressure for openness from the through a personal recommendation about 
+customers, new technologies have been adopted individual dietary requirements ([5] Peihua et al., 
+within the food labeling procedures. Optical 2021). 
+Character Recognition (OCR) technology is  
+seemingly becoming an effective answer for E. Implications for Consumer Trust and Brand 
+compliance and accuracy in the food labeling Loyalty  
+processes. OCR systems track processing by The integration of technology and food labeling 
+following raw materials to the end as finished transparency has very strong implications toward 
+packaged products, enabling food manufacturers to consumer trust and brand loyalty. Organizations 
+check ingredient lists, freshness dates, and allergen adopting label transparency through the right 
+determinations more effectively ([8]Cognex, 2023). information dissemination and following the 
+OCR tools can actually support online label standards of regulatory compliance are going to 
+validation in real time. This often improves the establish more robust bonds with consumers 
+quality and safety of the product.  Advanced optical ([1]Colby et al., 2020). As the consumers 
+character recognition (OCR) systems, such as those increasingly seek brands associated with their set 
+examined by Al-Moslmi et al[12]., are capable of values, including the sustainability and ethical 
+efficiently recognizing and converting text from sourcing criteria, companies have to apply the 
+images into editable and searchable digital technological means to meet those expectations. 
+formats. In 2024, data extraction will be enhanced Research shows that consumers will pay a premium 
+through ongoing updates to support various text for sustainably labeled products or those that provide 
+formats, thereby improving transparency and transparency with regards to ingredients. That 
+accuracy for customers. willingness suggests great opportunity for brands: 
+  However, traditional optical character recognition enhanced marketplace positions that arise from 
+(OCR) methods depend on images of high quality advanced labeling technologies-in support of 
+and may struggle with variations in labels. Recent consumer trust and loyalty. 
+developments in machine vision have begun to  
+address these challenges through the integration of F. Conclusion 
+preprocessing techniques such as denoising and  The literature concludes that with the technological 
+contrast enhancement (IJAIA, 2024). This study changes in OCR and machine learning, food labeling 
+further develops recent progress in the field by transparency tends to satisfy what consumers 
+examining the use of Optical Character Recognition demand. This streamlines the validation process 
+(OCR) in guaranteeing ingredient precision through while promoting better product safety and quality 
+the application of machine learning methods to assurance, but now, with these technologies coming 
+compare assertions with accepted nutritional into widespread use, consumers will continue to 
+guidelines. demand more valid information about the food they 
+  Beyond OCR, ML methods may be applied to the choose. Therefore, implementing OCR as well as 
+data extracted from the label for the purpose of machine learning for the validation of labels 
+ingredient categorization, based on their nutritional compared to manual verification methods, which 
+claims. For instance, a research proved the require labor-intensive processes, the integration of 
+possibility of combining OCR with machine OCR and machine learning provides a faster, more 
+learning to automatically identify allergenic reliable alternative that reduces human error.  
+ingredients on food packaging labels and enable 
+consumers to have up-to-date information about III. METHODOLOGY 
+
+allergens ([7] Rugved Borade, 2021). Such This section describes the methodology applied in this 
+integration would enhance safety and make work towards supporting the nutritional claims by Optical 
+consumers have full control over their diet choices. Character Recognition and machine learning approaches 
+ such as SVM and Decision Trees, to test the accuracy of 
+
+D. Machine Learning Applications in Food Labeling  
+ 
+Applications of machine learning in food labeling 
+have transcended allergen detection alone; instead, it 
+enhances general validation processes on labels. In 
+this respect, machine learning algorithms classify 
+the ingredients in light of nutrition claims' 
+conformity using data streamed from OCR systems. 
+
+979-8-3315-1809-7/24/$31.00 ©2024 IEEE 1166
+Authorized licensed use limited to: BRACT's Vishwakarma Institute Pune. Downloaded on August 04,2025 at 07:08:54 UTC from IEEE Xplore.  Restrictions apply. 
+
+
+
+Proceedings of the International Conference on IoT Based Control Networks and Intelligent Systems (ICICNIS-2024)
+IEEE Xplore Part Number: CFP242B2-ART: ISBN: 979-8-3315-1809-7
+
+ 
+
+Fig .1. System Architecture dairy, and nuts from a dataset downloaded from the USDA[10]. 
+
+ 
+
+claims regarding food categories, such as vegetables, USDA[10] Nutrition Reference: This reference gives critical 
+meats,  nutrition benchmarks and guidelines, which are needed to 
+
+cross-reference statements made on food packaging in the 
+A. Research Design subsequent stages of verification. 
+The study employs a quantitative research design as Data collection has two primary methods: 
+illustrated below in Figure 1. This is in order to assess the 
+validity of claims propagated by food products' nutritional Optical Character Recognition (OCR): It will utilize 
+assertions. This approach is used for the fact that statistical EasyOCR, which is a OCR library that requires deep learning 
+methods can objectively assess claims based on set standards techniques to extract text from images of food labels. 
+of nutrition. This study aims at predicting whether or not the Ingredients in the image will be matched against the 
+nutritional claims are correct through the use of machine USDA[10] dataset for the evaluation of nutritional claims. 
+learning models like SVM and Decision Trees based on data USDA Nutritional Dataset: The dataset includes nutritional 
+extracted from images of packaging food.  values for various food items categorized into: 
+B. Participants   Vegetables: Testing of the claims will be done on mean 
+It shall comprise participants who sourced the data set from values for calories (Min: 14, Max: 160), carbohydrates (Min: 
+the USDA[10], which presents nutrient details for these 2.65 g, Max: 20.23 g), fiber (Min: 0.5 g, Max: 6.7 g), net 
+products: fruits, nuts and seeds, oils, dairy, vegetables, and carbs (Min: 0.63 g, Max: 6.76 g), fats (Min: 0.02 g, Max: 
+meats. Individual values are provided for every type, such as 14.66 g), and protein (Min: 0.62 g, Max: 5.33 g). 
+caloric content, carbohydrates, fats, fiber, and proteins. This Meats: nutritional contents will be established for the 
+rich data set serves as a reference set with which to validate average value for calories, for example, Beef Brisket Flat 
+against the ingredient data extracted. Half - 277 kcal, carbohydrates 0 g, fats 22.18 g, and protein 
+Phase 1: Information Gathering 17.94 g. 
+
+ Milk and Eggs: Claims will be supported with mean values 
+for calories (25.5% DV), carbohydrates (7.8% DV), fats 
+
+ The compilation of data at a broad level would be the first (79.6% DV), and protein (44.3% DV). 
+step, which would include two significant entities: Food 
+Packaging Image Collection: Good-quality images of various Nuts and Seeds: The claims will be compared to the average 
+food products are compiled to act as the primary source for values for calories, 26% DV; carbohydrates, 22% DV; fiber, 
+deriving textual claims and ingredient information. 69% DV; net carbs, 18% DV; fats, 52% DV; saturated fats, 
+
+20% DV; and proteins, 20% DV. 
+
+979-8-3315-1809-7/24/$31.00 ©2024 IEEE 1167
+Authorized licensed use limited to: BRACT's Vishwakarma Institute Pune. Downloaded on August 04,2025 at 07:08:54 UTC from IEEE Xplore.  Restrictions apply. 
+
+
+
+Proceedings of the International Conference on IoT Based Control Networks and Intelligent Systems (ICICNIS-2024)
+IEEE Xplore Part Number: CFP242B2-ART: ISBN: 979-8-3315-1809-7
+
+Phase 2: OCR Analysis When claims are multi-category, hyperparameters such as C 
+
+ One of the OCR tools that would be applied in extracting and gamma for SVM can be optimized with grid search. 
+
+data from ingredient information from food labels is Decision Trees or ensemble techniques like Random Forests 
+
+EasyOCR. Apply image preprocessing techniques such as can be used to prevent overfitting when claims are multi-
+resizing, denoising, and boosting contrast to achieve readable category. Noisy data can also be removed and strict rules 
+text.  applied during tokenization and lemmatization to increase the 
+
+precision levels while standardizing the ingredients. 
+ Phase 3: Textual Processing & Standardization  
+
+In an effort to make the extracted text ready for use following Conducting a very structured methodology, the article aims 
+OCR, the process steps as follows: Tokenization, towards developing a sound methodology for the validation 
+Lemmatization, Filtering: It breaks down into pieces, reduces of food labeling statements using OCR technology and 
+to its base word form, filters out the stop words, and useless machine learning algorithms.  
+data. Ingredient terminology uniformity: This stage will 
+ensure uniformity with respect to ingredient nomenclature so TABLE 1: Comparison between SVM and Decision Tree 
+as to classifiably and verifiably classify claims. Variants of 
+the same ingredients come in the form of a couple of Support Vector 
+
+examples such as "sugar" and "sucrose, and this makes it Aspect Decision Tree Machine (SVM) 
+
+comparable. 
+
+Step 4: Categorizing Claim Types  Multi-category 
+Primary Use claims Binary claims 
+
+This then categorizes the resulting text into different types of 
+claims: Binary Claims: Those belonging to a category, such 
+as "natural" or "organic, which are analyzed by a Support 
+
+Multi-feature 
+Vector Machine algorithm. Multi-Category Claims: If the 
+
+Claim Type classification Binary classification 
+statement is more complex and contains more than one group 
+of nutrients, they may be selected for further study, and 
+several methodologies for classification may then apply. 
+
+Interpretability High Lower 
+Step 5: Implementing Models  
+
+This phase involves the application of two distinct modeling 
+approaches based on the claim type classification: Moderate 
+
+Performance accuracy High accuracy 
+   Step 5a: SVM Algorithm:  
+
+                  The Support Vector Machine (SVM) model is 
+primarily deployed for binary classification tasks in this Data Balanced labeled 
+study, specifically for verifying basic classifications such as Requirements Diverse datasets examples 
+'organic' or 'natural.' The goal of defining an optimal 
+boundary to differentiate between valid and invalid claims 
+based on ingredient and nutritional data makes SVM a Training Faster, less Slower, sensitive to 
+suitable model for this purpose. Complexity sensitive tuning 
+
+   Step 5b: Decision Tree Algorithm:  
+
+                 In the case of multi-category claims, a Decision Multiple nutrient Well-defined yes/no 
+Tree is applied. This model helps determine whether the Strengths thresholds claims 
+claims comply with the nutrient standards established by the 
+USDA[10]. The results provide an interpretable path to 
+decision and thus can easily be understood for more than one 
+
+Prone without Robust via 
+factor. 
+
+Overfitting pruning regularization 
+     Step 6: Verification Process 
+
+               Ensuring safety in food label verification involves 
+Output Multi-category Binary 
+
+integrating regulatory standards and applying stringent data 
+validation. Cross-reference extracted ingredient data against 
+verified nutritional benchmarks ([10]USDA standards) to  
+detect inaccuracies. Implement nutrient-specific thresholds to 
+
+IV.  EXPERIMENTAL RESULT 
+verify claims accurately 
+
+This section discusses the results obtained in our study: it 
+      Step 7: Performance Evaluation includes the distribution of "natural" and "organic" claims 
+
+across various food categories, ingredient extraction using 
+             The investigation is culminated by a critical 
+
+OCR, comparison to nutrition content using the USDA[10] 
+performance analysis of the accuracy, precision, recall, and standards, and the performance metrics of the algorithms 
+F1-score metrics by the developed model. Statistical analyses applied in machine learning methods.  
+of such kind provide quantitative insights into whether the 
+
+1. Allocation of Assertions Across Food Groups 
+Support Vector Machine as well as Decision Tree approach is 
+
+ The study started with a look at the distribution of 
+effective for nutritional claims verification. Parameters in the 
+
+"natural" and "organic" claims by a range of food 
+tuning model and quality of data can improve the metrics. 
+
+979-8-3315-1809-7/24/$31.00 ©2024 IEEE 1168
+Authorized licensed use limited to: BRACT's Vishwakarma Institute Pune. Downloaded on August 04,2025 at 07:08:54 UTC from IEEE Xplore.  Restrictions apply. 
+
+
+
+Proceedings of the International Conference on IoT Based Control Networks and Intelligent Systems (ICICNIS-2024)
+IEEE Xplore Part Number: CFP242B2-ART: ISBN: 979-8-3315-1809-7
+
+categories, as reflected in Figure 2. A stacked bar Vegetables, Meats, and Dairy products relative to 
+graph depicts the incidence of these claims in high- these standards. For example, vegetable-based 
+level categories like Vegetables, Meats, Dairy, Nuts, products had a mean calorie count of 50 kcal per 
+and Fruits. Both the Vegetables and Fruits serving, that is within USDA[10] benchmarks of 14-
+categories-thought-to-be sold to the health- 160 kcal. But products within the Meats and Dairy 
+conscious consumer-featured a shockingly higher categories occasionally failed to meet caloric 
+percentage of both "natural" and "organic" claims thresholds, thereby suggesting that certain products 
+compared to all else. This distribution is consistent do not really meet USDA[10] thresholds for their 
+with consumer expectations, whereby more respective claims. 
+"natural" claims are found in plant-based products, 
+likely because consumers perceive the former as 
+healthier. 
+
+  
+
+ 
+Figure 4: Calories per Serving Compared to 
+USDA[10] Standards. 
+
+4. Assessing Model Performance  
+ 
+
+ The efficacy of Two machine learning algorithms, 
+
+ Fig. 2: Allocation of "Natural" and "Organic" SVM and Decision Tree Classifier, were evaluated 
+
+Assertions Across Categories. for their ability to verify "natural" and "organic" 
+
+ claims from lists of ingredients and nutritional 
+
+2. Ingredient Extraction and Refinement  content that have been processed. Figure 5 consists 
+
+Ingredient list images on packaging applied OCR to of the performance metrics of each model, namely 
+accuracy, precision, recall, and F1-score. Figure 6 
+
+extract text for successive stages of refinement so 
+contains formulations for performance metrics, 
+
+standardization and accuracy reduced any remaining 
+including accuracy, precision, recall, and F1-score.  
+
+ingredient terminology variance as shown in Fig.3, In all of these, the SVM model had better 
+which every refinement stage decreases the overall performances, up to a maximum binary claim 
+ingredients count from the initial processing which verification accuracy rate of 89%. Although 
+involved tokenization, normalization which marginally less accurate, the Decision Tree model 
+eliminated redundant as well as varied terms resulted was surprisingly insightful in that its decision paths 
+that at the final steps left with 1,500 different are interpretable. Thus, they become very important 
+
+ingredients The content of product was thus really for products with more complex requirements of 
+
+represented. claims for classification. 
+
+ 
+   
+
+Figure 5: Performance Metrics of SVM and Decision 
+ Figure 3: Ingredient Count at Each Text 
+
+Tree Models.  
+Refinement Stage. 
+
+ 
+3. Nutritional Content Comparison Against  
+
+USDA[10] Benchmarks  
+To check the authenticity of the product claims,  
+mean nutritional values were compared for each  
+food group against benchmarks defined by the  
+USDA[10]. Figure 4 compares the caloric content of 
+
+979-8-3315-1809-7/24/$31.00 ©2024 IEEE 1169
+Authorized licensed use limited to: BRACT's Vishwakarma Institute Pune. Downloaded on August 04,2025 at 07:08:54 UTC from IEEE Xplore.  Restrictions apply. 
+
+
+
+Proceedings of the International Conference on IoT Based Control Networks and Intelligent Systems (ICICNIS-2024)
+IEEE Xplore Part Number: CFP242B2-ART: ISBN: 979-8-3315-1809-7
+
+Figure 6: Performance Metrics (Accuracy Precision, with better choices. Key metrics, such as the accuracy and 
+Recall, F1-Score) precision of confirmed claims, should be summarized to 
+
+emphasize the efficacy of the model. 
+ 
+ 
+
+VI FUTURE SCOPE 
+ 
+
+    Optimizing SVM hyperparameters, pruning, or ensemble 
+methods on Decision Trees can further extend classification 
+of binary and multi-category claims can result in good 
+accuracy. Oversampling or data augmentation can be made 
+to deal with class imbalance thus improving the reliability 
+of the model pertaining to varied claims. Additionally, the 
+model could include nutrient-specific thresholds using 
+USDA standards and introduce new features which 
+associate ingredients with the validity of claims will 
+
+ enhance the verification process. Besides these well-
+5. Cross-Validation Accuracy Across Multiple Folds established meanings of "organic" and "natural" claims, 
+
+  future research efforts would do well to try developing 
+To validate further the generalization capability of further claim categories, including "gluten-free," "low-fat," 
+both models, a five-fold cross-validation is and "non-GMO." Extend the framework to include these 
+performed, and the results are shown in Figure 6. outstanding claims so that further investigation might be 
+The SVM model is accurate for all folds and, thus, possible, thus bringing greater transparency and giving 
+good at generalization. On the other hand, the more consumer assurance about a much larger set of food 
+Decision Tree model showed wide variability. These label claims. Regular updates to the OCR and model 
+facts point out how well the SVM model can be algorithms with the latest ingredient databases, coupled 
+depended on regarding the aptness of the predictions with data encryption and secure storage, will help maintain 
+in terms of product claims across other datasets. safety and reliability in data handling. 
+However, in cases where the interpretation of the  
+prediction is all the more significant, a decision tree VII. REFERENCES  
+model would be advised.   
+
+[1]S.E.Colby,L.Johnson,A.Scheett,B.Hoverson. Nutrition 
+marketing on food labels. J. Nutr. Educ. Behav.,42(2)(2010), p.92-
+98 
+
+[2]Farokhynia, R., & Krikeb, M. (2024). Simultaneous Detection 
+and Validation of Multiple Ingredients on Product Packages: An 
+Automated Approach Using Machine Learning Techniques and 
+OCR. KTH Royal Institute of Technology. Retrieved fromKTH 
+DiVA 
+
+[3] Yaksh Shah, Nandan Jariwala, Bhakti Kachhia, Prachi 
+Shah(2023).Automated Nutrition Table Extraction and Ingredient 
+Recognition. International Journal of Research and Science & 
+Technology (IJRASET). Retrieved fromauIJRASET 
+
+[4]Gornale, S. S., et al. (2021). Automated Nutrient Level 
+Determination Using Machine Learning Techniques. Atlantis Press. 
+Retrieved from  Atlantis Press 
+
+ 
+[5] Peihua, M., An, L., Ning, Y., Ying, L., Rahul, B., Qin, W., & 
+
+Figure 6: Cross-Validation Accuracy Across Folds. 
+Ahuja, J. K. (2021). Application of Machine Learning for 
+
+V. CONCLUSION  Estimating Label Nutrients Using USDA Global Branded Food 
+Products Database. Food Science Journal. 
+
+  
+The evaluation results further demonstrate strength in [6] Davis, S., et al. (2016). How Consumer Demand for 
+
+Transparency is Shaping the Food Industry: Key Findings from the 
+validating nutritional claims by the model. The SVM model 
+
+Label Insight Food Revolution Study. University of California Davis 
+was 90% accurate, 85% precise, 90% recalling, and had an .  
+F1-score of 88%. Though less precise, the Decision Tree 
+
+[7] Rugved Borade,. (2024). Machine Learning Model for Optical 
+model is remarkable with an accuracy of 85%, precision of Character Recognition-Based Food Allergen Detection with 
+80%, recall of 85%, and an F1-score of 83%. The data Recommendation System for Alternative Food. International 
+presented illustrates the effectiveness of our models in Journal of Intelligent Systems and Applications in 
+
+accurately recognizing legitimate nutritional assertions by Engineering, 12(21s), 1869–1875. Retrieved from 
+https://ijisae.org/index.php/IJISAE/article/view/5757 
+
+evaluating product components. Overall, the suggested OCR 
+and machine learning framework, capable of automating the [8]Cognex Corporation. (2023). How OCR Tools Are Helping Food 
+
+validation of nutritional claims, is shown to be successful. and Beverage Manufacturers. 
+
+This structure is shown as a move towards enhancing [9]Indian Council of Medical Research (ICMR). Dietary Guidelines 
+
+transparency in labeling foods and providing consumers for India 2024. 
+
+979-8-3315-1809-7/24/$31.00 ©2024 IEEE 1170
+Authorized licensed use limited to: BRACT's Vishwakarma Institute Pune. Downloaded on August 04,2025 at 07:08:54 UTC from IEEE Xplore.  Restrictions apply. 
+
+
+
+Proceedings of the International Conference on IoT Based Control Networks and Intelligent Systems (ICICNIS-2024)
+IEEE Xplore Part Number: CFP242B2-ART: ISBN: 979-8-3315-1809-7
+
+[10] United States Department of Agriculture. (2022). FoodData  
+Central. https://fdc.nal.USDA.gov/ 
+
+ 
+[11]Seitaj, Hansi & Elangovan, Vinayak. (2024). Information 
+Extraction from Product Labels: A Machine Vision Approach.  
+International Journal of Artificial Intelligence & Applications. 15. 
+
+ 
+57-76. 10.5121/ijaia.2024.15204. 
+
+ 
+[12] Sumana, K R. (2024). Optimized OCR Data Extraction Using 
+Custom- Trained NLP-NER Models for Enhanced Image Analysis.  
+Journal of Emerging Technologies and Innovative Research. 11. 159-
+162.  
+
+ 
